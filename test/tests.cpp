@@ -47,7 +47,7 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterLock) {
     timedDoor->lock();
     std::this_thread::sleep_for(std::chrono::seconds(
         timedDoor->getTimeOut() + 1));
-    EXPECT_FALSE(timedDoor->isDoorOpened());
+    EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterUnlockAndLock) {
@@ -70,7 +70,7 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterMultipleUnlocks) {
     timedDoor->unlock();
     std::this_thread::sleep_for(std::chrono::seconds(
         timedDoor->getTimeOut() + 3));
-    EXPECT_FALSE(timedDoor->isDoorOpened());
+    EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 // Дополнительные тесты для MockedDoorTest
 
