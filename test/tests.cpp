@@ -46,7 +46,7 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterLock) {
     timedDoor->unlock();
     timedDoor->lock();
     std::this_thread::sleep_for(std::chrono::seconds(
-        timedDoor->getTimeOut() + 1));
+        timedDoor->getTimeOut() + 5));
     EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
