@@ -35,32 +35,39 @@ class TimedDoorTest : public testing::Test {
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterUnlock) {
     timedDoor->unlock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() + 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() + 1));
     EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterLock) {
     timedDoor->unlock();
     timedDoor->lock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() + 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() + 1));
     EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterUnlockAndLock) {
     timedDoor->unlock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() - 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() - 1));
     timedDoor->lock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() + 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() + 1));
     EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterMultipleUnlocks) {
     timedDoor->unlock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() - 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() - 1));
     timedDoor->unlock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() - 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() - 1));
     timedDoor->unlock();
-    std::this_thread::sleep_for(std::chrono::seconds(timedDoor->getTimeOut() + 1));
+    std::this_thread::sleep_for(std::chrono::seconds(
+        timedDoor->getTimeOut() + 1));
     EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
