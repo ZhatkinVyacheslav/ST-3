@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <thread>
+#include <chrono>
 #include "TimedDoor.h"
 
 class MockTimerClient : public TimerClient {
