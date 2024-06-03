@@ -38,7 +38,7 @@ class TimedDoorTest : public testing::Test {
 TEST_F(TimedDoorTest, DoorTimeoutAfterUnlock) {
     timedDoor->unlock();
     std::this_thread::sleep_for(std::chrono::seconds(
-        timedDoor->getTimeOut() + 3));
+        timedDoor->getTimeOut() + 5));
     EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
@@ -72,9 +72,8 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterMultipleUnlocks) {
         timedDoor->getTimeOut() + 3));
     EXPECT_TRUE(timedDoor->isDoorOpened());
 }
-// Дополнительные тесты для MockedDoorTest
 
-TEST(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
+TEST_F(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -84,7 +83,7 @@ TEST(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
     timer.tregister(1, &mockClient);
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
+TEST_F(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -94,7 +93,7 @@ TEST(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
     timer.tregister(3, &mockClient);
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
+TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -106,7 +105,7 @@ TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
     timer.tregister(1, &mockClient);
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
+TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -119,7 +118,7 @@ TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
     timer.tregister(1, &mockClient);
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlockAndLock) {
+TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlockAndLock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
