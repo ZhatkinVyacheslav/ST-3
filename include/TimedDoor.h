@@ -1,3 +1,5 @@
+// Copyright 2024 Zhatkin Vyacheslav
+
 #ifndef INCLUDE_TIMEDDOOR_H_
 #define INCLUDE_TIMEDDOOR_H_
 
@@ -41,6 +43,5 @@ class Timer {
  public:
   void tregister(int, TimerClient*);
 };
-
 
 #endif  // INCLUDE_TIMEDDOOR_H_

@@ -1,4 +1,4 @@
-// Copyright 2024 Vadim Belan
+// Copyright 2024 Zhatkin Vyacheslav
 
 #include <iostream>
 #include "TimedDoor.h"
