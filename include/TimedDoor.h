@@ -1,5 +1,3 @@
-// Copyright 2024 Vadim Belan
-
 #ifndef INCLUDE_TIMEDDOOR_H_
 #define INCLUDE_TIMEDDOOR_H_
 
@@ -15,38 +13,34 @@ class Door {
   virtual bool isDoorOpened() = 0;
 };
 
-class TimedDoor;
-
 class DoorTimerAdapter : public TimerClient {
  private:
   TimedDoor& door;
  public:
   explicit DoorTimerAdapter(TimedDoor&);
-  void Timeout() override;
-  TimedDoor& getDoor() const;
+  void Timeout();
 };
 
 class TimedDoor : public Door {
  private:
-  DoorTimerAdapter* adapter;
+  DoorTimerAdapter * adapter;
   int iTimeout;
   bool isOpened;
  public:
   explicit TimedDoor(int);
-  bool isDoorOpened() override;
-  void unlock() override;
-  void lock() override;
-  int getTimeOut() const;
+  bool isDoorOpened();
+  void unlock();
+  void lock();
+  int  getTimeOut();
   void throwState();
-  DoorTimerAdapter* getAdapter();
 };
 
 class Timer {
- private:
-  TimerClient* client;
+  TimerClient *client;
   void sleep(int);
  public:
   void tregister(int, TimerClient*);
 };
+
 
 #endif  // INCLUDE_TIMEDDOOR_H_

@@ -1,24 +1,19 @@
-// Copyright 2024 Vadim Belan
+// Copyright 2024 Zhatkin Vyacheslav 
 
-#include <stdexcept>
-#include <thread>  // NOLINT [build/c++11]
-#include <chrono>  // NOLINT [build/c++11]
 #include "TimedDoor.h"
+#include <stdexcept>
 
 DoorTimerAdapter::DoorTimerAdapter(TimedDoor& door) : door(door) {}
 
 void DoorTimerAdapter::Timeout() {
-    if (door.isDoorOpened()) {
-        door.throwState();
+    if (!door.isDoorOpened()) {
+        throw std::runtime_error("Door is not opened after timeout");
     }
 }
 
-TimedDoor& DoorTimerAdapter::getDoor() const {
-    return door;
+TimedDoor::TimedDoor(int timeout) : iTimeout(timeout), isOpened(false) {
+    adapter = new DoorTimerAdapter(*this);
 }
-
-TimedDoor::TimedDoor(int timeout) : iTimeout(timeout)
-, isOpened(false), adapter(new DoorTimerAdapter(*this)) {}
 
 bool TimedDoor::isDoorOpened() {
     return isOpened;
@@ -32,16 +27,12 @@ void TimedDoor::lock() {
     isOpened = false;
 }
 
-int TimedDoor::getTimeOut() const {
+int TimedDoor::getTimeOut() {
     return iTimeout;
 }
 
 void TimedDoor::throwState() {
-    throw std::runtime_error("Door left open!");
-}
-
-DoorTimerAdapter* TimedDoor::getAdapter() {
-    return adapter;
+    throw std::runtime_error("The door is still open");
 }
 
 void Timer::tregister(int timeout, TimerClient* client) {
@@ -50,6 +41,7 @@ void Timer::tregister(int timeout, TimerClient* client) {
     client->Timeout();
 }
 
-void Timer::sleep(int seconds) {
-    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+void Timer::sleep(int timeout) {
+    sleep(timeout);
+    throw std::runtime_error("The door is still open");
 }
