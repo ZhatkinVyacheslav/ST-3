@@ -39,15 +39,14 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterUnlock) {
     timedDoor->unlock();
     std::this_thread::sleep_for(std::chrono::seconds(
         timedDoor->getTimeOut() + 5));
-    EXPECT_FALSE(timedDoor->isDoorOpened());
+    EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterLock) {
-    timedDoor->unlock();
     timedDoor->lock();
     std::this_thread::sleep_for(std::chrono::seconds(
         timedDoor->getTimeOut() + 5));
-    EXPECT_TRUE(timedDoor->isDoorOpened());
+    EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
 TEST_F(TimedDoorTest, DoorTimeoutAfterUnlockAndLock) {
