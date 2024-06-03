@@ -73,7 +73,7 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterMultipleUnlocks) {
     EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
-TEST_F(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
+TEST(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -83,7 +83,7 @@ TEST_F(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
     timer.tregister(1, &mockClient);
 }
 
-TEST_F(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
+TEST(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -93,7 +93,7 @@ TEST_F(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
     timer.tregister(3, &mockClient);
 }
 
-TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
+TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -105,7 +105,7 @@ TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
     timer.tregister(1, &mockClient);
 }
 
-TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
+TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
@@ -118,7 +118,7 @@ TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
     timer.tregister(1, &mockClient);
 }
 
-TEST_F(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlockAndLock) {
+TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlockAndLock) {
     MockTimerClient mockClient;
     EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
 
