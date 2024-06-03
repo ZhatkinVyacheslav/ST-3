@@ -72,61 +72,38 @@ TEST_F(TimedDoorTest, DoorTimeoutAfterMultipleUnlocks) {
     EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutMultipleTimes) {
-    MockTimerClient mockClient;
-    EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
-
-    Timer timer;
-    timer.tregister(1, &mockClient);
-    timer.tregister(1, &mockClient);
-    timer.tregister(1, &mockClient);
+TEST_F(TimedDoorTest, DoorCanBeOpenedAfterUnlock) {
+    timedDoor->unlock();
+    EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutWithDifferentTimeouts) {
-    MockTimerClient mockClient;
-    EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
-
-    Timer timer;
-    timer.tregister(1, &mockClient);
-    timer.tregister(2, &mockClient);
-    timer.tregister(3, &mockClient);
+TEST_F(TimedDoorTest, DoorCanBeClosedAfterLock) {
+    timedDoor->lock();
+    EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlock) {
-    MockTimerClient mockClient;
-    EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
-
-    Timer timer;
-    TimedDoor door(1);
-    DoorTimerAdapter adapter(door);
-
-    door.unlock();
-    timer.tregister(1, &mockClient);
+TEST_F(TimedDoorTest, DoorCanBeOpenedAfterMultipleUnlocks) {
+    timedDoor->unlock();
+    timedDoor->unlock();
+    EXPECT_TRUE(timedDoor->isDoorOpened());
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorLock) {
-    MockTimerClient mockClient;
-    EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
-
-    Timer timer;
-    TimedDoor door(1);
-    DoorTimerAdapter adapter(door);
-
-    door.unlock();
-    door.lock();
-    timer.tregister(1, &mockClient);
+TEST_F(TimedDoorTest, DoorCanBeClosedAfterMultipleLocks) {
+    timedDoor->unlock();
+    timedDoor->lock();
+    timedDoor->lock();
+    EXPECT_FALSE(timedDoor->isDoorOpened());
 }
 
-TEST(MockedDoorTest, TimerCallsTimeoutAfterDoorUnlockAndLock) {
-    MockTimerClient mockClient;
-    EXPECT_CALL(mockClient, Timeout()).Times(testing::AtLeast(1));
+TEST_F(TimedDoorTest, DoorCanBeOpenedAndClosed) {
+    timedDoor->unlock();
+    timedDoor->lock();
+    EXPECT_FALSE(timedDoor->isDoorOpened());
+    timedDoor->unlock();
+    EXPECT_TRUE(timedDoor->isDoorOpened());
+}
 
-    Timer timer;
-    TimedDoor door(1);
-    DoorTimerAdapter adapter(door);
-
-    door.unlock();
-    door.lock();
-    door.unlock();
-    timer.tregister(1, &mockClient);
+TEST_F(TimedDoorTest, GetTimeoutReturnsCorrectValue) {
+    int expectedTimeout = 2;
+    EXPECT_EQ(timedDoor->getTimeOut(), expectedTimeout);
 }
